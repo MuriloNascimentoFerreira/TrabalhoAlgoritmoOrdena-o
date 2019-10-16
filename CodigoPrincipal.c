@@ -23,6 +23,13 @@ typedef struct{
 		char corSort[20];
 }Cor;
 
+void apagarTodosRegistros(FILE * arq_ca){
+	remove("arquivo_calcados");
+	arq_ca = fopen("arquivo_calcados","rb");
+	if (arq_ca == NULL)
+		printf("Todos registros apagados!\n");
+}
+
 void gerarCalcados(FILE *arq_ca,FILE *arq_ma,FILE *arq_mo,FILE *arq_co){
 	int n = 0;
 	printf("Quantos registro deseja gerar?");
@@ -294,17 +301,17 @@ void ordenaQuick(FILE *arq_c,double *tempoQuick){
 	tf = clock();//Fim da execução
 	*tempoQuick = (( (double) (tf - t0) ) / (((double)CLOCKS_PER_SEC)/1000));///Armazena o tempo
 	imprimirCalcados(vetorCalcados,tamanhoVetor);
-	
 }
 
 int opc(){
 		int n = 0; 
 		printf("\n---------------MENU DE OPÇÕES-----------------\n");
-		printf("1-Ordenar por Shellsort\n");
-		printf("2-Ordenar por Heapsort\n");
-		printf("3-Ordenar por Quicksort\n");
-		printf("4-Gerar registros de calçado\n");
-		printf("5-Tempo para execução de cada algoritmo de ordenação\n");
+		printf("1- Ordenar registros por Shellsort\n");
+		printf("2- Ordenar registros por Heapsort\n");
+		printf("3- Ordenar registros por Quicksort\n");
+		printf("4- Gerar registros aleatórios de calçado\n");
+		printf("5- Exibir tempo de execução de cada algoritmo de ordenação\n");
+		printf("6- Apagar todos registros\n");
 		printf("0-Sair\n");
 		printf("-----------------------------------------------\n");
 		scanf(" %d",&n);
@@ -330,7 +337,11 @@ int main()
 									
 					case 4:gerarCalcados(arq_calcados,arq_marcas,arq_modelos,arq_cores);
 							break;
-					case 5:printf("Tempo Shellsort: %f\nTempo HeapSort: %f\nTempo Quicksort %f\n",tempoShel,tempoHeap,tempoQuick);
+							
+					case 5:printf("Tempo Shellsort: %.3f ms\nTempo HeapSort: %.3f ms\nTempo Quicksort %.3f ms\n",tempoShel,tempoHeap,tempoQuick);
+							break;
+							
+					case 6:apagarTodosRegistros(arq_calcados);
 							break;
 							
 					case 0: return 0;
